@@ -1,9 +1,15 @@
 // Relay: runs on a GitHub Actions runner (which can reach make.fun) and executes the plan in run/plan.json.
 // Only public data travels here: signatures, addresses, hashes. Private keys never leave the owner's machine.
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, writeFileSync, mkdirSync, appendFileSync } from 'node:fs';
 import { publicEncrypt, constants } from 'node:crypto';
 
 const ORIGIN = process.env.MAKEFUN_ORIGIN || 'https://make.fun';
+const OUTDIR = 'relay-out';
+mkdirSync(OUTDIR, { recursive: true });
+const LOGFILE = `${OUTDIR}/run-${process.env.GITHUB_RUN_ID || Date.now()}.txt`;
+writeFileSync(LOGFILE, `plan: ${process.env.GITHUB_RUN_ID || ''}\n`);
+const rawLog = console.log.bind(console);
+console.log = (...a) => { const line = a.map((x) => (typeof x === 'string' ? x : JSON.stringify(x))).join(' '); appendFileSync(LOGFILE, line + '\n'); rawLog(line); };
 const plan = JSON.parse(readFileSync('run/plan.json', 'utf8'));
 const retPub = existsSync('tools/return_pub.pem') ? readFileSync('tools/return_pub.pem', 'utf8') : null;
 

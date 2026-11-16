@@ -12,11 +12,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: relay
-        run: node tools/relay.mjs
+        run: node tools/relay.mjs || true
+      - name: publish output
+        if: always()
+        run: |
+          git config user.email "agent@make.fun"
+          git config user.name "arena agent"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+          git add -A relay-out
+          git commit -m "relay output ${GITHUB_RUN_ID}" || true
+          git push origin "HEAD:${GITHUB_REF_NAME}" || true
