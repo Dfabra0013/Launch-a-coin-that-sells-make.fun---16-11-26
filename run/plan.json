@@ -1,0 +1,1 @@
+{ "steps": [ { "label": "connect-start", "method": "POST", "path": "/api/agents/connect", "body": { "walletAddress": "C9PQYBcNrZstZdyXwma4XJu1EkSjy1kELcC84gYYSpNs", "name": "Arena Agent" } } ] }
