@@ -3,6 +3,12 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { Connection, PublicKey, VersionedTransaction, Transaction } from '@solana/web3.js';
 
+// A signed create transaction is legacy (fits in 1232 bytes); accept both encodings.
+function loadTx(raw) {
+  if (raw[0] >= 0x80) return VersionedTransaction.deserialize(raw);
+  return Transaction.from(raw);
+}
+
 const cfg = JSON.parse(readFileSync('run/launch.json', 'utf8'));
 const RPC = cfg.rpc || process.env.SOLANA_RPC || 'https://api.mainnet-beta.solana.com';
 const OUT = 'relay-out';
@@ -28,10 +34,7 @@ async function blockhash() {
 
 async function simulate() {
   const raw = Buffer.from(readFileSync(cfg.txFile || 'run/tx.b64', 'utf8').trim(), 'base64');
-  const res = await conn.simulateTransaction(
-    VersionedTransaction.deserialize(raw),
-    { sigVerify: false, replaceRecentBlockhash: false, commitment: 'processed' }
-  );
+  const res = await conn.simulateTransaction(loadTx(raw), 'processed');
   say('simulation err:', JSON.stringify(res.value.err));
   say('units consumed:', res.value.unitsConsumed);
   for (const log of res.value.logs || []) say('  ', log);
@@ -46,8 +49,11 @@ async function send() {
   while (Date.now() < deadline) {
     if (existsSync(txFile)) {
       const raw = Buffer.from(readFileSync(txFile, 'utf8').trim(), 'base64');
-      const tx = VersionedTransaction.deserialize(raw);
-      say('sending tx', tx.signatures.map((s) => Buffer.from(s).toString('base64').slice(0, 12)).join(','), 'bytes', raw.length);
+      const tx = loadTx(raw);
+      const sigs = tx instanceof Transaction
+        ? tx.signatures.map((s) => s.publicKey.toBase58().slice(0, 8)).join(',')
+        : tx.signatures.map((s) => Buffer.from(s).toString('base64').slice(0, 8)).join(',');
+      say('sending tx signers', sigs, 'bytes', raw.length);
       try {
         const sig = await conn.sendRawTransaction(raw, { skipPreflight: false, maxRetries: 3, preflightCommitment: 'confirmed' });
         say('SENT signature:', sig);
