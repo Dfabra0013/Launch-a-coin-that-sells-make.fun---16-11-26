@@ -1,0 +1,34 @@
+name: agent
+on:
+  push:
+    paths:
+      - 'run/**'
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: deps
+        run: cd agent && (npm install --silent --no-fund --no-audit @solana/web3.js@1.98.4 bs58 @pump-fun/pump-sdk@4.3.1 @solana/spl-token >/dev/null 2>&1 || true)
+      - name: task
+        run: |
+          set +e
+          TASK="$(cat run/task.txt 2>/dev/null || echo relay)"
+          echo "task=$TASK"
+          if [ "$TASK" = "launch" ]; then node agent/launch.mjs; else node agent/relay.mjs; fi
+      - name: publish output
+        if: always()
+        run: |
+          git config user.email "agent@make.fun"
+          git config user.name "arena agent"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+          git add -A relay-out
+          git commit -m "relay output ${GITHUB_RUN_ID}" || true
+          git push origin "HEAD:${GITHUB_REF_NAME}" || true

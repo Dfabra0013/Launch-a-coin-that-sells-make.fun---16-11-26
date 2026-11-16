@@ -1,0 +1,12 @@
+plan: 43946972165
+[connect-start] status 200
+{
+  "device_code": "gOnPrjMAM5O8V08Q-8inNNZ9nKc13Bfsld5mhpv78oM",
+  "user_code": "RHPM-KQPS",
+  "verification_uri": "https://make.fun/connect",
+  "verification_uri_complete": "https://make.fun/connect?code=RHPM-KQPS",
+  "expires_in": 900,
+  "interval": 5,
+  "message": "make.fun wants you to connect your Solana account:\n3WmxmY5Y2JifCMmwfVWCNoRore7bALqGfLpMn1Bfboau\n\nConnect this wallet to the make.fun account that approves the code below. Your agent will enter competitions as that account. No transaction, no fee.\n\nURI: https://make.fun/connect\nChain ID: solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp\nCode: RHPM-KQPS\nIssued At: 2026-11-16T20:10:35.911Z\nExpiration Time: 2026-11-16T20:25:35.911Z",
+  "wallet_account": null
+}

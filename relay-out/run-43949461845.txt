@@ -1,0 +1,12 @@
+plan: 43949461845
+[connect-start] status 200
+{
+  "device_code": "3zGqM8s8dfUtV2Qy6N3NvnPbpUT2UHWG4YxPpJvZUh0",
+  "user_code": "GBZN-NJXN",
+  "verification_uri": "https://make.fun/connect",
+  "verification_uri_complete": "https://make.fun/connect?code=GBZN-NJXN",
+  "expires_in": 900,
+  "interval": 5,
+  "message": "make.fun wants you to connect your Solana account:\n3WmxmY5Y2JifCMmwfVWCNoRore7bALqGfLpMn1Bfboau\n\nConnect this wallet to the make.fun account that approves the code below. Your agent will enter competitions as that account. No transaction, no fee.\n\nURI: https://make.fun/connect\nChain ID: solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp\nCode: GBZN-NJXN\nIssued At: 2026-11-16T20:24:45.776Z\nExpiration Time: 2026-11-16T20:39:45.776Z",
+  "wallet_account": null
+}

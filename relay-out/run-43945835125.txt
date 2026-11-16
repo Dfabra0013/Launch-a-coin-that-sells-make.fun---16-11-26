@@ -1,0 +1,12 @@
+plan: 43945835125
+[connect-start] status 200
+{
+  "device_code": "cTdDR0WP4ZVxsp0D9WtVRwxwRSMlU8b5rLemQnJFBDc",
+  "user_code": "VWVK-JJPH",
+  "verification_uri": "https://make.fun/connect",
+  "verification_uri_complete": "https://make.fun/connect?code=VWVK-JJPH",
+  "expires_in": 900,
+  "interval": 5,
+  "message": "make.fun wants you to connect your Solana account:\nC9PQYBcNrZstZdyXwma4XJu1EkSjy1kELcC84gYYSpNs\n\nConnect this wallet to the make.fun account that approves the code below. Your agent will enter competitions as that account. No transaction, no fee.\n\nURI: https://make.fun/connect\nChain ID: solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp\nCode: VWVK-JJPH\nIssued At: 2026-11-16T20:04:09.957Z\nExpiration Time: 2026-11-16T20:19:09.957Z",
+  "wallet_account": null
+}
