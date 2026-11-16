@@ -39,7 +39,9 @@ async function doHttp(step) {
     init.headers['content-type'] = 'application/json';
     init.body = JSON.stringify(step.body);
   }
-  const res = await fetch(url, init);
+  init.signal = AbortSignal.timeout(step.timeoutMs || 25000);
+  let res;
+  try { res = await fetch(url, init); } catch (e) { return { status: 0, json: null, text: `fetch failed: ${e.message}` }; }
   const text = await res.text();
   let json = null;
   try { json = JSON.parse(text); } catch { /* not json */ }
