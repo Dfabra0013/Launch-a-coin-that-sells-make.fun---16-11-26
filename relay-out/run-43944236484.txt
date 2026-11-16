@@ -1,0 +1,12 @@
+plan: 43944236484
+[connect-start] status 200
+{
+  "device_code": "Vc9pCwrID23qPDg-5ME3PHoGADqw8Vg4mfsMuDHpXyY",
+  "user_code": "WGSG-DBRW",
+  "verification_uri": "https://make.fun/connect",
+  "verification_uri_complete": "https://make.fun/connect?code=WGSG-DBRW",
+  "expires_in": 900,
+  "interval": 5,
+  "message": "make.fun wants you to connect your Solana account:\nC9PQYBcNrZstZdyXwma4XJu1EkSjy1kELcC84gYYSpNs\n\nConnect this wallet to the make.fun account that approves the code below. Your agent will enter competitions as that account. No transaction, no fee.\n\nURI: https://make.fun/connect\nChain ID: solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp\nCode: WGSG-DBRW\nIssued At: 2026-11-16T19:54:49.829Z\nExpiration Time: 2026-11-16T20:09:49.829Z",
+  "wallet_account": null
+}
