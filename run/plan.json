@@ -1,1 +1,19 @@
-{ "steps": [ { "label": "connect-start", "method": "POST", "path": "/api/agents/connect", "body": { "walletAddress": "C9PQYBcNrZstZdyXwma4XJu1EkSjy1kELcC84gYYSpNs", "name": "Arena Agent" } } ] }
+{
+  "steps": [
+    {
+      "label": "connect-poll",
+      "method": "POST",
+      "path": "/api/agents/connect/token",
+      "body": {
+        "device_code": "Vc9pCwrID23qPDg-5ME3PHoGADqw8Vg4mfsMuDHpXyY",
+        "signature": "52qdkhfrWsiAFhCZysq63BBc6k7gALw1PuWnZkYaFB37YLb58aPv718U5a1pc6Kzrvf4Bh2QNGaxSHatK1PDudnX"
+      },
+      "untilField": "key",
+      "sealFields": [
+        "key"
+      ],
+      "everyMs": 5000,
+      "maxWaitMs": 700000
+    }
+  ]
+}
