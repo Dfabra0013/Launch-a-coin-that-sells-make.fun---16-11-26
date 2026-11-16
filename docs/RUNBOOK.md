@@ -55,8 +55,13 @@ because the building machine cannot reach Solana and the runner must never hold 
 3. Runner mode `send` waits for `run/tx.b64`, sends it with `skipPreflight: false`, confirms it and
    writes `relay-out/sent.json`.
 
-A blockhash is good for ~60–90 s, so steps 1–3 are run back to back: publish, sign, push, the
-runner sends within seconds.
+A blockhash is good for ~60–90 s, so the three legs run back to back: publish, sign, push, the
+runner sends within seconds. `agent/go.sh` does exactly that, three attempts, and is the one
+command to run once the wallet holds SOL:
+
+```sh
+agent/go.sh
+```
 
 ## 4. Record the receipt
 

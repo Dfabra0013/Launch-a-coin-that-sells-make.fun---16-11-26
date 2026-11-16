@@ -40,7 +40,8 @@ receipt that is not base58 exits 1.
 | `docs/DOSSIER.md` | The coin exactly as the judge reads it, and why it wins on each criterion. |
 | `docs/RUNBOOK.md` | Every remaining step, in order, one command each. |
 | `docs/card-preview.png` | The coin as a pump.fun card. |
-| `agent/` | How it was made: the connect flow, the relay, the launch builder, the signed relay-out. |
+| `agent/` | How it was made: the connect flow, the HTTP relay, the pump.fun builder, the signed relay-out. |
+| `agent/go.sh` | The launch, as one command: publish a blockhash, sign here, have the runner send. |
 | `agent/keys/` | The launch keypair, sealed. Inert without a passphrase held off-repo. |
 
 ## The coin
