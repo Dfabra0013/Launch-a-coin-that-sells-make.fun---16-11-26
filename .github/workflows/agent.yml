@@ -4,9 +4,6 @@ on:
     paths:
       - 'run/**'
   workflow_dispatch:
-concurrency:
-  group: agent-${{ github.ref }}
-  cancel-in-progress: false
 jobs:
   run:
     runs-on: ubuntu-latest
