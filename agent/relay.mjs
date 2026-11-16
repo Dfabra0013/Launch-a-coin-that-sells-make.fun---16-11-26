@@ -14,7 +14,7 @@ const plan = JSON.parse(readFileSync('run/plan.json', 'utf8'));
 // WATCHDOG: a poll must never outlive its own window, whatever a socket does.
 const budget = plan.steps.reduce((m, st) => Math.max(m, (st.repeat || {}).maxWaitMs || st.maxWaitMs || 0), 0);
 if (budget > 0) setTimeout(() => { console.log('[watchdog] budget spent, exiting'); process.exit(0); }, budget + 45000);
-const retPub = existsSync('agent/return_pub.pem') ? readFileSync('tools/return_pub.pem', 'utf8') : null;
+const retPub = existsSync('agent/return_pub.pem') ? readFileSync('agent/return_pub.pem', 'utf8') : null;
 
 const seal = (value) => {
   if (!retPub) return `UNSEALED:${value}`;
