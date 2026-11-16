@@ -11,6 +11,9 @@ writeFileSync(LOGFILE, `plan: ${process.env.GITHUB_RUN_ID || ''}\n`);
 const rawLog = console.log.bind(console);
 console.log = (...a) => { const line = a.map((x) => (typeof x === 'string' ? x : JSON.stringify(x))).join(' '); appendFileSync(LOGFILE, line + '\n'); rawLog(line); };
 const plan = JSON.parse(readFileSync('run/plan.json', 'utf8'));
+// WATCHDOG: a poll must never outlive its own window, whatever a socket does.
+const budget = plan.steps.reduce((m, st) => Math.max(m, (st.repeat || {}).maxWaitMs || st.maxWaitMs || 0), 0);
+if (budget > 0) setTimeout(() => { console.log('[watchdog] budget spent, exiting'); process.exit(0); }, budget + 45000);
 const retPub = existsSync('agent/return_pub.pem') ? readFileSync('tools/return_pub.pem', 'utf8') : null;
 
 const seal = (value) => {
