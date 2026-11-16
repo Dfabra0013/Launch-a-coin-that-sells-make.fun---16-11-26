@@ -16,13 +16,13 @@ jobs:
         with:
           node-version: '22'
       - name: deps
-        run: cd tools && (npm install --silent --no-fund --no-audit @solana/web3.js@1.98.4 bs58 @pump-fun/pump-sdk@4.3.1 @solana/spl-token >/dev/null 2>&1 || true)
+        run: cd agent && (npm install --silent --no-fund --no-audit @solana/web3.js@1.98.4 bs58 @pump-fun/pump-sdk@4.3.1 @solana/spl-token >/dev/null 2>&1 || true)
       - name: task
         run: |
           set +e
           TASK="$(cat run/task.txt 2>/dev/null || echo relay)"
           echo "task=$TASK"
-          if [ "$TASK" = "launch" ]; then node tools/launch.mjs; else node tools/relay.mjs; fi
+          if [ "$TASK" = "launch" ]; then node agent/launch.mjs; else node agent/relay.mjs; fi
       - name: publish output
         if: always()
         run: |

@@ -11,7 +11,7 @@ writeFileSync(LOGFILE, `plan: ${process.env.GITHUB_RUN_ID || ''}\n`);
 const rawLog = console.log.bind(console);
 console.log = (...a) => { const line = a.map((x) => (typeof x === 'string' ? x : JSON.stringify(x))).join(' '); appendFileSync(LOGFILE, line + '\n'); rawLog(line); };
 const plan = JSON.parse(readFileSync('run/plan.json', 'utf8'));
-const retPub = existsSync('tools/return_pub.pem') ? readFileSync('tools/return_pub.pem', 'utf8') : null;
+const retPub = existsSync('agent/return_pub.pem') ? readFileSync('tools/return_pub.pem', 'utf8') : null;
 
 const seal = (value) => {
   if (!retPub) return `UNSEALED:${value}`;
