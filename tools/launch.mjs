@@ -17,11 +17,14 @@ const conn = new Connection(RPC, 'confirmed');
 const say = (...a) => console.log(...a);
 
 async function balance() {
-  const pk = new PublicKey(cfg.wallet);
-  const lamports = await conn.getBalance(pk);
-  say(`balance ${cfg.wallet}: ${lamports} lamports (${lamports / 1e9} SOL)`);
-  writeFileSync(`${OUT}/balance.json`, JSON.stringify({ wallet: cfg.wallet, lamports, at: new Date().toISOString() }, null, 2));
-  return lamports;
+  const rows = [];
+  for (const w of cfg.wallets || [cfg.wallet]) {
+    const lamports = await conn.getBalance(new PublicKey(w));
+    say(`balance ${w}: ${lamports} lamports (${lamports / 1e9} SOL)`);
+    rows.push({ wallet: w, lamports, sol: lamports / 1e9 });
+  }
+  writeFileSync(`${OUT}/balance.json`, JSON.stringify({ rows, at: new Date().toISOString() }, null, 2));
+  return rows;
 }
 
 async function blockhash() {
