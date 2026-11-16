@@ -10,8 +10,10 @@ const fs = require('node:fs');
   let mintKp;
   if (cfg.mintSecret) mintKp = Keypair.fromSecretKey(new Uint8Array(cfg.mintSecret));
   else if (fs.existsSync('.secrets/mint.json')) mintKp = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync('.secrets/mint.json', 'utf8'))));
+  else if (cfg.freshMint === false) throw new Error('no mint keypair on disk');
   else {
     mintKp = Keypair.generate();
+    require('node:fs').mkdirSync('.secrets', { recursive: true });
     fs.writeFileSync('.secrets/mint.json', JSON.stringify(Array.from(mintKp.secretKey)), { mode: 0o600 });
   }
   const ix = await PUMP_SDK.createV2Instruction({
